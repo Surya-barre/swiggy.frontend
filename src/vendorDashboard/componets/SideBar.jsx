@@ -24,7 +24,7 @@ const SideBar = ({ setShowFirm, setShowProduct, setShowAllProduct,showFirmTitle}
           className="hover:bg-gray-700 p-2 rounded cursor-pointer"
           onClick={setShowAllProduct}
         >
-          All Products
+           My products
         </li>
         <li className="hover:bg-gray-700 p-2 rounded cursor-pointer">
           User Details

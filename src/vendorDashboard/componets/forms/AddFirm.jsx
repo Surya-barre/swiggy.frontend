@@ -2,8 +2,15 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Apidata } from "../Data/Api";
 
-const AddFirm = () => {
+const AddFirm = ({ LoginHandler }) => {
   const fileInputRef = useRef(); // ✅ for resetting file input
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Please login first");
+    LoginHandler();
+
+    return;
+  }
 
   const [firm, setFirm] = useState({
     firmName: "",
@@ -63,11 +70,7 @@ const AddFirm = () => {
     firm.region.forEach((item) => formData.append("region", item));
 
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        alert("Please login first");
-        return;
-      }
+     
 
       const res = await axios.post(`${Apidata}/firm/addfirm`, formData, {
         headers: {
@@ -76,9 +79,11 @@ const AddFirm = () => {
         },
       });
 
-      console.log(res.data.message);
+      // console.log(res.data.message);
       localStorage.setItem("firmId", res.data.firmId);
+      alert("for your confirmation of the firmName once again login");
       resetForm();
+      LoginHandler();
     } catch (err) {
       if (
         err.response &&
@@ -156,7 +161,7 @@ const AddFirm = () => {
               )}
             </div>
           </div>
-
+                                                                             
           <input
             type="text"
             name="offer"
@@ -172,7 +177,7 @@ const AddFirm = () => {
             onChange={handleImage}
             ref={fileInputRef} // ✅ reference to reset input
             className="w-full px-4 py-2 border rounded-md"
-            required
+            
           />
 
           <button

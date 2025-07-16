@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Apidata } from "../Data/Api";
 
-const AllProduct = () => {
+const AllProduct = ({LoginHandler}) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const AllProduct = () => {
 
   const fetchProducts = () => {
     const firmId = localStorage.getItem("firmId");
-    console.log("Firm ID:", firmId);
+    // console.log("Firm ID:", firmId);
 
     if (firmId) {
       axios
@@ -21,6 +21,10 @@ const AllProduct = () => {
           setProducts(res.data.products || res.data);
         })
         .catch((err) => console.log("Error fetching products:", err));
+    }
+    else{
+      alert("Please login first");
+      LoginHandler();
     }
   };
 
@@ -39,7 +43,7 @@ const AllProduct = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>The King of Cricket - Kohli</h1>
+      <h1>your products are </h1>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
         {products.map((product) => (
           <div

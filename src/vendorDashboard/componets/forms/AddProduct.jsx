@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Apidata } from "../Data/Api";
 
-const AddProduct = () => {
+const AddProduct = ({LoginHandler}) => {
+  if (localStorage.getItem("firmId") === null) {
+    alert("Please login first");
+    LoginHandler();
+    return;
+  }
   const [user, setUser] = useState({
     productName: "",
     price: "",
@@ -43,16 +48,29 @@ const AddProduct = () => {
     user.category.forEach((item) => formData.append("category[]", item));
 
     try {
+      
+      
       const res = await axios.post(
         `${Apidata}/product/add-product/${localStorage.getItem("firmId")}`,
         formData
       );
-      console.log("Response:", res.data);
+      // console.log("Response:", res.data);
+      if(res.data){
+        alert("your products are added successfully");
+      }
+      setUser({
+        productName: "",
+        price: "",
+        category: [],
+        bestSeller: false,
+        description: "",
+        image: null,
+      });
     } catch (err) {
       console.error("Error:", err.response?.data || err.message);
     }
 
-    console.log("Submitted", user);
+    // console.log("Submitted", user);
   };
   
 

@@ -34,10 +34,12 @@ import { Apidata } from "../Data/Api";
             vendorResponse.data.vendor.firm[0].firmName
           );
           localStorage.setItem("firmId",vendorResponse.data.vendorFirmId)
+          // alert("now you can add your restaurant");
         window.location.reload(); 
         // welcomeHandler();
        }catch(err){
-        console.log(err);
+        console.log(err,"hello idfdsklf");
+        window.location.reload(); 
        }
       
     } catch (err) {

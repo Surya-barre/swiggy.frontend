@@ -37,8 +37,10 @@ const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("firmId");
     localStorage.removeItem("firmName");
+  
     setShowLogout(false);
     setShowFirmTitle(true);
+    window.location.reload(); 
   }
 };
 
@@ -98,7 +100,12 @@ const logoutHandler = () => {
 console.log(showWelcome)
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar setShowLogin={LoginHandler} setShowRegister={RigisterHandler} showLogOut={showLogOut} logoutHandler={logoutHandler}/>
+      <Navbar
+        setShowLogin={LoginHandler}
+        setShowRegister={RigisterHandler}
+        showLogOut={showLogOut}
+        logoutHandler={logoutHandler}
+      />
       <div className="flex">
         <SideBar
           setShowFirm={FirmHandler}
@@ -114,10 +121,10 @@ console.log(showWelcome)
             />
           )}
           {showRegister && <SignUp LoginHandler={LoginHandler} />}
-          {showFirm && <AddFirm />}
-          {showProduct && <AddProduct />}
+          {showFirm && <AddFirm LoginHandler={LoginHandler} />}
+          {showProduct && <AddProduct LoginHandler={LoginHandler} />}
           {showWelcome && <VendorLogin />}
-          {showAllProduct && <AllProduct />}
+          {showAllProduct && <AllProduct LoginHandler={LoginHandler}/>}
         </div>
       </div>
     </div>
